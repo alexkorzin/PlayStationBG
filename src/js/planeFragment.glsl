@@ -10,30 +10,29 @@ void main(void) {
   	// float color = min(grid.x, grid.y);
   	// gl_FragColor = vec4(1.,1.,1.,0.5 - color);
 
-	float colorGreen = 0.0;
-	float colorRed = 0.0;
-	float colorBlue = 0.0;
+	float colorGreen = 0.3 + v_position.z / 60.;
+	float colorRed = 0.3+ v_position.z / 60. ;
+	float colorBlue = 0.3+ v_position.z / 60. ;
+
+	float transparent = 0.3;
+	
 
 	// Red
 	if(colorScheme == 1.0){
-		colorGreen = 0.15 + .2 -vUv.y;
 		colorRed = 0.85;
-		colorBlue = 0.3 + .2 -vUv.y;
+		colorGreen = 0.2 + v_position.z / 60.;
 	}
 
 	// Blue
 	if(colorScheme == 2.0){
-		colorGreen = 0.6 - vUv.y - abs(sin(time/1000.))/10.;
-		colorRed = 1.- vUv.y - 0.8;
-		colorBlue = .9;
+		colorBlue = 0.85;
+		colorRed = 0.2+ v_position.z / 60.;
 	}
 
 	// Black
 	if(colorScheme == 3.0){
-		colorGreen = 1. - vUv.y/2. - 0.6;
-		colorRed = 1. - vUv.y/2. - 0.6;
-		colorBlue = 1. - vUv.y/2. - 0.6;
+		colorGreen = 0.3+ v_position.z / 60. ;
 	}
 
-  	gl_FragColor = vec4(colorRed, colorGreen, colorBlue,0.3);
+  	gl_FragColor = vec4(colorRed, colorGreen, colorBlue, transparent);
 }

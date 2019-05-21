@@ -2,8 +2,11 @@ import * as THREE from 'three';
 import Perlin from './lib/perlin'
 const OrbitControls = require('three-orbitcontrols');
 
-import fragment from './fragment.glsl';
-import vertex from './vertex.glsl';
+import fragment from './planeFragment.glsl';
+import vertex from './planeVertex.glsl';
+
+import particlesFragment from './particlesFragment.glsl';
+import particlesVertex from './particlesVertex.glsl';
 
 
 // Renderer
@@ -41,10 +44,8 @@ SCENE.add(light);
 
 // Add objects
 const geometry = new THREE.PlaneGeometry(350, 60, 80, 50);
-const material = new THREE.MeshPhongMaterial({
-  color: 0x5bcbf5,
-  // wireframe: true
-});
+
+const particlesGeomntry = new THREE.PlaneGeometry(200,200);
 
 const shaderMaterial = new THREE.ShaderMaterial({
   extensions: {
@@ -52,7 +53,7 @@ const shaderMaterial = new THREE.ShaderMaterial({
   },
   uniforms: {
     time: { type: 'f', value: 0.0 },
-    colorScheme: { type: 'f', value: 1.0 },
+    colorScheme: { type: 'f', value: 3.0 },
   },
   vertexShader: vertex,
   fragmentShader: fragment,
@@ -61,10 +62,29 @@ const shaderMaterial = new THREE.ShaderMaterial({
   transparent: true
 });
 
+const shaderParticlesMaterial = new THREE.ShaderMaterial({
+  extensions: {
+    derivatives: '#extension GL_OES_standard_derivatives : enable',
+  },
+  uniforms: {
+    time: { type: 'f', value: 0.0 },
+  },
+  vertexShader: particlesVertex,
+  fragmentShader: particlesFragment,
+  // wireframe: true,
+  side: THREE.DoubleSide,
+  transparent: true
+});
+
+const meshParticles = new THREE.Mesh(particlesGeomntry, shaderParticlesMaterial);
+meshParticles.position.z = 30;
+SCENE.add(meshParticles);
+
 const mesh = new THREE.Mesh(geometry, shaderMaterial);
-mesh.position.y -= 20
+mesh.position.y -= 5
 SCENE.add(mesh);
 mesh.rotation.x = -Math.PI / 2;
+
 
 // Render loop
 function render() {
@@ -72,6 +92,7 @@ function render() {
 
   time++;
   shaderMaterial.uniforms.time.value = time;
+  shaderParticlesMaterial.uniforms.time.value = time;
   geometry.verticesNeedUpdate = true;
 
   // geometry.vertices.forEach((v, i) => {
