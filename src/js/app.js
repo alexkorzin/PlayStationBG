@@ -74,12 +74,12 @@ function render() {
   shaderMaterial.uniforms.time.value = time;
   geometry.verticesNeedUpdate = true;
 
-  geometry.vertices.forEach((v, i) => {
-    v.z = Perlin(
-      time / 1000 + v.x / 120 + v.y / 50,
-      v.x / 80,
-      v.y / 20) * 50;
-  })
+  // geometry.vertices.forEach((v, i) => {
+  //   v.z = Perlin(
+  //     time / 1000 + v.x / 120 + v.y / 50,
+  //     v.x / 80,
+  //     v.y / 20) * 50;
+  // })
 
   time++;
   CAMERA.updateProjectionMatrix();
