@@ -40,7 +40,7 @@ SCENE.add(light);
 
 
 // Add objects
-const geometry = new THREE.PlaneGeometry(350, 60, 100, 50);
+const geometry = new THREE.PlaneGeometry(350, 60, 80, 50);
 const material = new THREE.MeshPhongMaterial({
   color: 0x5bcbf5,
   // wireframe: true
@@ -51,7 +51,8 @@ const shaderMaterial = new THREE.ShaderMaterial({
     derivatives: '#extension GL_OES_standard_derivatives : enable',
   },
   uniforms: {
-    // . . .
+    time: { type: 'f', value: 0.0 },
+    colorScheme: { type: 'f', value: 1.0 },
   },
   vertexShader: vertex,
   fragmentShader: fragment,
@@ -63,18 +64,21 @@ const shaderMaterial = new THREE.ShaderMaterial({
 const mesh = new THREE.Mesh(geometry, shaderMaterial);
 mesh.position.y -= 20
 SCENE.add(mesh);
-mesh.rotation.x =  -Math.PI / 2;
+mesh.rotation.x = -Math.PI / 2;
 
 // Render loop
 function render() {
   requestAnimationFrame(render);
 
+  time++;
+  shaderMaterial.uniforms.time.value = time;
   geometry.verticesNeedUpdate = true;
 
   geometry.vertices.forEach((v, i) => {
-    v.z = Perlin(time / 450 + v.x / 80 + v.y / 80,
-      v.x / 200,
-      v.y / 20) * 30;
+    v.z = Perlin(
+      time / 1000 + v.x / 120 + v.y / 50,
+      v.x / 80,
+      v.y / 20) * 50;
   })
 
   time++;
@@ -83,7 +87,6 @@ function render() {
 }
 
 render();
-
 
 // OnResize
 window.addEventListener('resize', onWindowResize, false);
