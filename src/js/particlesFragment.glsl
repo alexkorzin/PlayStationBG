@@ -21,7 +21,7 @@ float dotNoise2D(in float x, in float y, in float fractionalMaxDotSize, in float
     float yoffset = (rand2D(vec2(integer_x + 1.0, integer_y)) - 0.5);
     float dotSize = 0.5 * fractionalMaxDotSize * max(0.55,rand2D(vec2(integer_x, integer_y+1.0)));
 
-   	vec2 truePos = vec2 (0.5 + xoffset * (1.0 - 2.0 * dotSize - abs(sin(time/500.)) + vUv.y ) , 0.5 + yoffset * (1.0 -2.0 * dotSize - sin(time/300.) + vUv.x/10. ));
+   	vec2 truePos = vec2 (0.5 + xoffset * (1.0 - 2.0 * dotSize - 2.* abs(sin(time/500.)) + vUv.y) , 0.5 + yoffset * (1.0 -2.0 * dotSize - 2. * sin(time/300.) + vUv.x/10. ));
 
    	float distance = length(truePos - vec2(fractional_x, fractional_y));
 
@@ -34,6 +34,6 @@ float DotNoise2D(in vec2 coord, in float wavelength, in float fractionalMaxDotSi
 }
 
 void main(void) {
-    float color = DotNoise2D( vec2(vUv.x - time/10000., vUv.y) , 0.05, abs(sin(time/50. + vUv.x/vUv.y*10.))/12., 0.5);
+    float color = DotNoise2D( vec2(vUv.x - time/10000., vUv.y) , 0.05, abs(sin(time/50. + vUv.x/vUv.y*10.))/15., 0.5);
     gl_FragColor = vec4(1.,1.,1., color - 0.35);
 }

@@ -43,7 +43,9 @@ SCENE.add(light);
 
 
 // Add objects
-const geometry = new THREE.PlaneGeometry(350, 60, 40, 20);
+const geometry = new THREE.PlaneGeometry(350, 60, 250, 250);
+
+
 
 const particlesGeomntry = new THREE.PlaneGeometry(200,200);
 
@@ -68,7 +70,6 @@ const shaderParticlesMaterial = new THREE.ShaderMaterial({
   },
   uniforms: {
     time: { type: 'f', value: 0.0 },
-
   },
   vertexShader: particlesVertex,
   fragmentShader: particlesFragment,
@@ -86,7 +87,6 @@ const mesh = new THREE.Mesh(geometry, shaderMaterial);
 mesh.position.y -= 5
 SCENE.add(mesh);
 mesh.rotation.x = -Math.PI / 2;
-
 
 // Render loop
 function render() {
