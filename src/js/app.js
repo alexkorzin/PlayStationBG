@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import Perlin from './lib/perlin'
 const OrbitControls = require('three-orbitcontrols');
 
 import fragment from './planeFragment.glsl';
@@ -43,7 +42,7 @@ SCENE.add(light);
 
 
 // Add objects
-const geometry = new THREE.PlaneGeometry(350, 60, 250, 250);
+const geometry = new THREE.PlaneGeometry(350, 60, 60, 40);
 
 
 
