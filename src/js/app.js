@@ -43,7 +43,7 @@ SCENE.add(light);
 
 
 // Add objects
-const geometry = new THREE.PlaneGeometry(350, 60, 80, 50);
+const geometry = new THREE.PlaneGeometry(350, 60, 40, 20);
 
 const particlesGeomntry = new THREE.PlaneGeometry(200,200);
 
@@ -53,7 +53,7 @@ const shaderMaterial = new THREE.ShaderMaterial({
   },
   uniforms: {
     time: { type: 'f', value: 0.0 },
-    colorScheme: { type: 'f', value: 3.0 },
+    colorScheme: { type: 'f', value: 1.0 },
   },
   vertexShader: vertex,
   fragmentShader: fragment,
@@ -68,6 +68,7 @@ const shaderParticlesMaterial = new THREE.ShaderMaterial({
   },
   uniforms: {
     time: { type: 'f', value: 0.0 },
+
   },
   vertexShader: particlesVertex,
   fragmentShader: particlesFragment,
@@ -75,6 +76,7 @@ const shaderParticlesMaterial = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   transparent: true
 });
+
 
 const meshParticles = new THREE.Mesh(particlesGeomntry, shaderParticlesMaterial);
 meshParticles.position.z = 30;
